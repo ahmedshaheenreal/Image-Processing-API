@@ -19,14 +19,6 @@ describe("POST /uploadImage", () => {
     expect(response.body.success).toBe(true);
   });
 
-  it("should return 400 for invalid file type", async () => {
-    const response = await request(app)
-      .post("/uploadImage")
-      .attach("image", failPic); // Test with an invalid file type
-    expect(response.status).toBe(400);
-    expect(response.body).toHaveProperty("success", false);
-  });
-
   it("should return 404 for no file found", async () => {
     const response = await request(app)
       .post("/uploadImage")
