@@ -1,4 +1,4 @@
-name: CI
+name: Run Tests
 
 on:
   push:
@@ -6,20 +6,23 @@ on:
       - "**"
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3 # Updated to latest version
 
       - name: Set up Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3 # Updated to latest version
         with:
-          node-version: "20" # Specify the Node.js version you are using
+          node-version: "20" # Match your local Node.js version
 
       - name: Install dependencies
         run: npm install
 
-      - name: Run tests
-        run: npm test
+      - name: Clear npm cache
+        run: npm cache clean --force
+
+      - name: Run tests with verbose logging
+        run: npm test -- --verbose
