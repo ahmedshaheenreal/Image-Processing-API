@@ -7,6 +7,7 @@ app.use(express.json());
 app.use(imageRoutes); // Use your image routes
 const successPic = path.join(__dirname, "images", "success.png");
 const failPic = path.join(__dirname, "images", "dumm.txt");
+const wrongname = path.join(process.cwd(), "data", "wrong");
 
 //uploading Test
 describe("POST /uploadImage", () => {
@@ -26,4 +27,51 @@ describe("POST /uploadImage", () => {
     expect(response.status).toBe(400);
     expect(response.body).toHaveProperty("success", false);
   });
+});
+
+//resize test
+describe("POST /resize", () => {
+  it("should return 500 for wrong file name", async () => {
+    const response = await request(app).post("/resize").send({
+      name: "wrong.png",
+      width: 100,
+      height: 100,
+      isbackgroundWhite: true,
+      fit: "cover",
+      position: "center",
+    });
+    console.log(response.body);
+
+    expect(response.status).toBe(500);
+    // expect(response.body).toHaveProperty("success", false);
+    // expect(response.body).toHaveProperty("message", "File not found");
+  });
+
+  it("should return 201 for Successful operation", async () => {
+    const response = await request(app).post("/resize").send({
+      name: "success.png",
+      width: 150,
+      height: 100,
+      isbackgroundWhite: true,
+      fit: "cover",
+      position: "center",
+    });
+
+    expect(response.status).toBe(201);
+  });
+
+  it("should return 200 for already processed  images", async () => {
+    const response = await request(app).post("/resize").send({
+      name: "success.png",
+      width: 100,
+      height: 100,
+      isbackgroundWhite: true,
+      fit: "cover",
+      position: "center",
+    });
+
+    expect(response.status).toBe(200);
+  });
+
+  // Add more tests for other scenarios here...
 });
