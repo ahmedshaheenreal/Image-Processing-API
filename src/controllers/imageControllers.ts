@@ -106,3 +106,22 @@ export const downloadImageHandler = (
     next(err);
   }
 };
+export const cropImageHandler = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const filePath = path.join(process.cwd(), "data", req.body.name);
+    const output = path.join(process.cwd(), "data", "cropped-" + req.body.name);
+
+    if (!fs.existsSync(filePath)) {
+      res.status(404).json({ success: false, message: "Image not found" });
+    }
+    await sharp(filePath).extract(req.body.dimensions).toFile(output);
+
+    res.status(200).json({ message: "Image cropped successfully" });
+  } catch (error) {
+    next(error);
+  }
+};
