@@ -46,7 +46,9 @@ export const resizeImageHanlder = async (
     );
     //check if file already processed
     if (fs.existsSync(output)) {
-      res.status(200).json({
+      console.log(output);
+      console.log("Aloooo");
+      res.status(201).json({
         success: true,
         message: "File Already resized, you can download it.",
       });

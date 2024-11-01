@@ -70,7 +70,7 @@ describe("POST /resize", () => {
       position: "center",
     });
 
-    expect(response.status).toBe(200);
+    expect(response.status).toBe(201);
   });
 
   // Add more tests for other scenarios here...
