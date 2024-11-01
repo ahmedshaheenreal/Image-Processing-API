@@ -7,7 +7,7 @@ app.use(express.json());
 app.use(imageRoutes); // Use your image routes
 const successPic = path.join(__dirname, "images", "success.png");
 const failPic = path.join(__dirname, "images", "dumm.txt");
-const wrongname = path.join(process.cwd(), "data", "wrong");
+// const wrongname = path.join(process.cwd(), "data", "wrong");
 
 //uploading Test
 describe("POST /uploadImage", () => {
@@ -72,6 +72,31 @@ describe("POST /resize", () => {
 
     expect(response.status).toBe(201);
   });
+});
 
-  // Add more tests for other scenarios here...
+//crop test
+describe("GET /crop", () => {
+  it("should return 404 for wrong file name", async () => {
+    const response = await request(app)
+      .get("/crop")
+      .send({
+        name: "wrong.png",
+        dimensions: { left: 200, top: 55, width: 400, height: 300 },
+      });
+
+    expect(response.status).toBe(404);
+    // expect(response.body).toHaveProperty("success", false);
+    // expect(response.body).toHaveProperty("message", "File not found");
+  });
+
+  it("should return 200 for Successful operation", async () => {
+    const response = await request(app)
+      .get("/crop")
+      .send({
+        name: "success.png",
+        dimensions: { left: 200, top: 200, width: 400, height: 300 },
+      });
+
+    expect(response.status).toBe(200);
+  });
 });
