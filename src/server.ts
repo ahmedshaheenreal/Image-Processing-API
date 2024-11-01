@@ -18,6 +18,6 @@ app.use(imageRouter);
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   myErrorMiddleware(err, req, res, next);
 });
-app.listen(3000, () => {
+app.listen(process.env.PORT, () => {
   console.log("server is running on port 3000");
 });
