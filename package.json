@@ -5,9 +5,9 @@
   "main": "src/server.ts",
   "scripts": {
     "test": "jest",
-    "start": "ts-node src/index.ts",
+    "start": "node src/server.js",
     "serve": "nodemon src/server.ts",
-    "build": "npm-run-all --sequential build:*"
+    "build": "tsc"
   },
   "author": "",
   "license": "ISC",
