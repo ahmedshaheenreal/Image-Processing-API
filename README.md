@@ -1,6 +1,3 @@
-Here’s a detailed README for your Image Processing API project:
-
----
 
 # Image Processing API
 
